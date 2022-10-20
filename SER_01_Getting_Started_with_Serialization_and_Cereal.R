@@ -52,6 +52,6 @@ if (!dir.exists(path_to_backend)) {
   dir.create(path_to_backend)
 }
 
-# invoke main() to create invoke serialization and deserialization of a class.
+# invoke main() to invoke serialization and deserialization of a class.
 main()
 

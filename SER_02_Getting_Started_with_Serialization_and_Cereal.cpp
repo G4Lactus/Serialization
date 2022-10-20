@@ -28,7 +28,7 @@ public:
 int main()
 {
   
-  {
+  { // serialize towards xml file
     std::ofstream os("Backend/data.xml");
     cereal::XMLOutputArchive archive(os);
     
@@ -47,16 +47,16 @@ int main()
   }
 
 
-  {
-      std::ifstream is("Backend/data.xml");
-      cereal::XMLInputArchive archive(is);
+  { // de-serialize from xml file
+    std::ifstream is("Backend/data.xml");
+    cereal::XMLInputArchive archive(is);
       
-      MyData m1;
-      int someInt;
-      double d;
+    MyData m1;
+    int someInt;
+    double d;
       
-      archive(m1, someInt, d); // NVPs not strictly necessary when loading
-                               // but could be used (even out of order)
+    archive(m1, someInt, d); // NVPs not strictly necessary when loading
+                             // but could be used (even out of order)
   }
   
   

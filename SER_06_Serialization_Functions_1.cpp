@@ -16,7 +16,8 @@
 // cereal will pick whichever is present and give a compile time error if it
 // cannot disambiguate a single serialization method.
 
-// NOTE: 
+// NOTE:
+// ---------
 // - save functions are const or take const reference, o.w., cereal throws
 //   a static assertion if it detects a non const save function.
 //

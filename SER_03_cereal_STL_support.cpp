@@ -17,7 +17,7 @@
 #include <cereal/types/string.hpp>
 #include <cereal/types/complex.hpp>
 
-// for doing the actual serialization
+// for doing the actual serialization into JSON format
 #include <cereal/archives/json.hpp>
 #include <Rcpp.h>
 
