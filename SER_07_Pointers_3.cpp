@@ -22,12 +22,16 @@ struct A {
   template<typename Archive>
   void serialize(Archive& archive)
   {
-    archive(x, hidden);
+    archive(
+      CEREAL_NVP(x),
+      CEREAL_NVP(hidden)
+    );
   }
   
   template <class Archive>
   static void load_and_construct( Archive & ar, cereal::construct<A> & construct )
   {
+    construct(std::shared_ptr<)
     int x;
     ar(x);
     construct(x);
@@ -35,9 +39,7 @@ struct A {
   }
   
 private:
-  
   bool hidden = false;
-  
 };
 
 
@@ -64,23 +66,29 @@ struct B : A {
   }
   
 };
-
 CEREAL_REGISTER_TYPE(B);
+
 
 void simulate_procedure()
 {
+  
   std::shared_ptr<B> b = std::make_shared<B>(10, "1");
   
   std::stringstream ss;
   {
+    Rcpp::Rcout << "Begin serialization!" << std::endl;
     cereal::JSONOutputArchive oarchive(ss);
     oarchive(b);
+    Rcpp::Rcout << "Finish serialization!" << std::endl;
   }
+  
   Rcpp::Rcout << ss.str() << std::endl;
   std::shared_ptr<B> b2;
   {
+    Rcpp::Rcout << "Begin deserialization!" << std::endl;    
     cereal::JSONInputArchive iarchive(ss);
     iarchive(b2);
+    Rcpp::Rcout << "Finish deserialization!" << std::endl;
   }  
 }
 

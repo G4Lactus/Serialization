@@ -38,19 +38,22 @@ struct Derived : public Base
 // Only one copy of each base class will be contained within a derived object.
 // cereal provides a method for tracking virtual base classes, preventing 
 // multiple copies from being serialized.
+// 
 // If cereal::base_class were used in a situation where the same base class
-// appeared in more than on traversal of the class hierarchy, it could
+// appeared in more than one traversal of the class hierarchy, it could
 // potentially result in duplicate information being serialized.
+// 
 // USE: cereal::virtual_base_class, to track the instantiation of base objs
 // for a derived class, ensuring that only one copy of each base class is
 // serialized.
+// -------------
 #include <cereal/types/base_class.hpp>
 
 struct BaseA
 {
   int x;
-  // Note the non-member serialize - trying to call serialize from a derived
-  // class wouldn't work
+  // Note no serialize member here
+  // -> trying to call serialize from a derived class wouldn't work
 };
 
 

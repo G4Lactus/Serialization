@@ -105,9 +105,8 @@ template <typename T> class ConstInputParameter< arma::Row<T> > ;
 }
 
 #endif
+
 #include <RcppArmadillo.h>
-
-
 // [[Rcpp::export]]
 Rcpp::RawVector test_serialization(arma::Mat<double> m) {
   std::stringstream ss;
