@@ -1,18 +1,17 @@
 // Non-public serialization and Minimal split serialization
 // ----------------------------------------------------------
-#include <iostream>
 // [[Rcpp::depends(Rcereal)]]
+#include <iostream>
+#include <cereal/access.hpp>
 #include <Rcpp.h>
 
 
 // Non-public serialization
 // --------------------------
 // Serialization functions can be private or protected.
-// cereal will need access to them, and can be given access by befriending
-// cereal::access, defined in
-// <cereal/access.hpp>
+// cereal will need access to them, and can be given access by befriending.
+// include: friend cereal::access, defined in <cereal/access.hpp>
 
-#include <cereal/access.hpp>
 class MyCoolClass
 {
 private:

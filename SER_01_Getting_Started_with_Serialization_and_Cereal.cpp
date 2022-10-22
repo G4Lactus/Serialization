@@ -1,14 +1,16 @@
 // SER_01 Getting started with serialization in cereal
 // Example: Serialize some simple data
 // ----------------------------------------
-#include <iostream>
-#include <sstream>
-
 // [[Rcpp::depends(Rcereal)]]
+#include <iostream>
+#include <sstream> // sstream is one option, you can choose other streams
+
 #include <cereal/archives/binary.hpp>
 #include <Rcpp.h>
 
-// some complex data class
+
+
+// some "complex" data class
 class MyData
 {
 public:
@@ -56,21 +58,21 @@ int main()
     
   } // archive goes out of scope, ensuring all contents are flushed
 
-  
+
   // Some archives in cereal can only safely finish flushing their contents upon
   // their destruction. Make sure, especially for output serialization, that
   // your archive is automatically destroyed when you are finished with it.
 
 
-  // de-serialization
+  // deserialization
   // -------------------
   {
     cereal::BinaryInputArchive iarchive(ss); // create an input
     
     MyData m1, m2, m3;
-    
     iarchive(m1, m2, m3); // read the data from archive
     
+    Rcpp::Rcout << "After deserialization" << std::endl;
     Rcpp::Rcout << "Class obj m1: x, y, z" << std::endl;
     Rcpp::Rcout << m1.x << std::endl;
     Rcpp::Rcout << m1.y << std::endl;
@@ -88,9 +90,7 @@ int main()
     Rcpp::Rcout << m3.y << std::endl;
     Rcpp::Rcout << m3.z << std::endl;
     Rcpp::Rcout << std::endl;
-        
   }
-  
   
   return 0;
 }

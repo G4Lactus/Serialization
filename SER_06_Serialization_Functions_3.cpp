@@ -1,17 +1,23 @@
 // Explicit versioning and Inheritance
 // ----------------------------------------
+// [[Rcpp::depends(Rcereal)]]
+#include <iostream>
+
+#include <cereal/cereal.hpp>
+#include <Rcpp.h>
+
 
 // Explicit versioning
-// ------------------------------------
+// ----------------------------------------------------------------------------
 // cereal supports explicit versioning for types, much like Boost class 
 // versioning.
 // In cereal it is optional, the parameter has always to be a 
 // const std::uint32_t, typically named version.
 // 
-// An explicit version can be specified by CEREAL_CLASS_VERSION macro. It takes
-// a type and a version number, and causes cereal to serialize this version
-// information when it saves that type using a versioned serialization function.
-// 
+// An explicit version can be specified by CEREAL_CLASS_VERSION macro.
+// It takes a type and a version number, and causes cereal to serialize this
+// version information when it saves that type using a versioned serialization
+// function.
 // If you use this macro, but do not use a versioned serialized function, no
 // version information will be saved.
 // If you use a versioned serialization function and do not specify the version
@@ -22,12 +28,7 @@
 // If you did not use a versioned serialization function to create the archive
 // you are loading from, your data will be corrupted and your program will
 // likely crash. The version number is supplied by the version parameter.
-// 
-
-#include <iostream>
-// [[Rcpp::depends(Rcereal)]]
-#include <cereal/cereal.hpp>
-#include <Rcpp.h>
+// ----------------------------------------------------------------------------
 
 struct MyCoolClass
 {

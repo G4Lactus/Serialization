@@ -18,8 +18,8 @@
 // their destruction.
 // 
 // cereal was not designed to be a robust long term storage solution - it is
-// your responsibility to ensure compatibility between saved and loaded cereal
-// archives.
+// your responsibility to ensure version compatibility between saved and loaded
+// cereal archives.
 // 
 // It is recommended that you use the same version of cereal for both loading
 // and saving data.
@@ -30,14 +30,12 @@
 // ----------------------
 #include <cereal/archives/binary.hpp>
 // produce compact bit level representation of data and is not human readable.
-// It is a good choice, when computers will be looking at the data on both ends
-// of the serialization.
+// It is a good choice, when computers are at both ends of writing/reading the
+// serialization.
 // The binary archive is also the fastest archive that comes with cereal.
 // Binary archives will ignore name-value pairs and only serialize the values.
-// 
+
 #include <cereal/archives/portable_binary.hpp>
-// tracks the endianess of the saving and loading machines and transforms data
-// appropriately.
 // When using a binary archive and a file stream (std::fstream), remember to
 // specify the binary flag (std::ios::binary) when constructing the stream.
 
@@ -60,25 +58,6 @@
 // containers since the number of children of a node can be queried when
 // loading the data. This means that it is possible to add extra data manually
 // to an XML archive before loading it:
-#include <fstream>
-{
-  std::ofstreamfile("out.xml")
-  cereal::XMLOutputArchive archive(file); // depending on the archive type, data
-                                          // may be output to the stream as
-                                          // it is serialized, or only on
-                                          // destruction
-
-  archive(some_data, more_data, data_galore);
-}
-
-#include <iostream>
-#include <cereal/types/vector.hpp>
-{
-  cereal::XMLOutputArchive archive( std::cout ); // console output structure
-  bool arr[] = {true, false};
-  std::vector<int> vec = {1, 2, 3, 4, 5};
-  archive( CEREAL_NVP(vec), arr );
-}
 
 
 
@@ -87,15 +66,6 @@
 #include <cereal/archives/json.hpp>
 // Human readable format, that should not be used in situations where serialized
 // data "size" is critical. They support name-value pairs.
-#include <iostream>
-#include <cereal/types/vector.hpp>
-{
-  cereal::JSONOutputArchive archive(std::cout);
-  bool arr[] = {true, false};
-  std::vector<int> vec = {1, 2, 3, 4, 5};
-  archive(CEREAL_NVP(vec), arr);
-}
-
 // Note:
 // - dynamically sized containers (e.g. std::vector) are serialized as JSON
 //   arrays

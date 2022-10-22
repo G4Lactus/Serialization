@@ -22,7 +22,7 @@
 //  - <tuple>
 //  - <unordered_set>
 //  - <unordered_map>
-//  
+//
 // - cereal cannot handle raw pointers, but smart ones
 // 
 // - cereal can be less verbose
@@ -32,9 +32,13 @@
 // - cereal has a different prefereed syntax for serialization:
 //    Boost: &, <<, >>   to send things to archive
 //    cereal: ()         archive(mydata1, mydata2)
+// 
+// -> for me boost does not even compile (2022)
+// -> don't use boost at all and use cereal!
 // --------------------------------------------------
-#include <fstream>
 // [[Rcpp::depends(Rcereal)]]
+
+#include <fstream>
 #include <cereal/archives/binary.hpp>
 #include <Rcpp.h>
 

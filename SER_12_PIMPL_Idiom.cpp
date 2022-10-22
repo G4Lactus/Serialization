@@ -27,6 +27,9 @@
 #include <Rcpp.h>
 // [[Rcpp::depends(Rcereal)]]
 
+
+// myclass.hpp
+// --------------------------
 class MyClass
 {
 public:
@@ -48,11 +51,10 @@ private:
 };
 
 
-// myclass.hpp
+// myclass.cpp
 // -----------------------------
 #include "myclass.hpp"
 #include <cereal/types/memory.hpp>
-
 // We need to include all archives that this type will be serialized with for
 // explicit instantiation
 #include <cereal/archives/json.hpp>
@@ -89,6 +91,8 @@ template void MyClass::MyClassDetail::load<cereal::JSONInputArchive>(cereal::JSO
 // single serialize function
 template void MyClass::serialize<cereal::JSONInputArchive>(cereal::JSONOutputArchive&);
 template void MyClass::serialize<cereal::JSONOutputArchive&);
+
+
 
 
 // main.cpp
