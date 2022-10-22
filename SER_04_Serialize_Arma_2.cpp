@@ -1,3 +1,6 @@
+// THIS FILE IS STILL WORK IN PROGRESS
+// PURPOSE: SERIALIZATION OF ALL COMMON ARMA DATA TYPES WITH CEREAL OR BOOST
+
 #include <iostream>
 #include <sstream>
 // [[Rcpp::depends(RcppArmadillo, BH)]]
