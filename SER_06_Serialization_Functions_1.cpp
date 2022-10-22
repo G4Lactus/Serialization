@@ -7,7 +7,7 @@
 //
 // Unlike Boost, there is no need to explicitly tell cereal that it needs to use
 // the split load-save pair.
-// cereal will pick whichever is present and give a compile time error if it
+// cereal will pick whichever is available and give a compile time error if it
 // cannot disambiguate a single serialization method.
 
 // NOTE:

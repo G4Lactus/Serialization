@@ -43,41 +43,62 @@
 #include <Rcpp.h>
 
 
+
+// ---------------------------------------------------------
 // create some complex data class
 class SomeData
 {
 public:
   SomeData() = default;
+  SomeData(int a, int b): a{a}, b{b}{};
   int a;
   int b;
+
   
+  int get_int() const {
+    return c;
+  }
+  
+  double get_double() const {
+    return d;
+  }
+  
+    
 private:
   // set cereal access as friend
   friend class cereal::access;
   
+  int c{5};
+  double d{1.23};
+  
+
   // cereal supports class versioning (optional)
   template <class Archive>
   void save( Archive& ar, std::uint32_t const version) const
   {
     ar(a, b); // operator() is the preferred way of interfacing the archive
+    ar(c, d);
   }
   
   template <class Archive>
   void load( Archive& ar, std::uint32_t const version )
   {
     ar(a, b);
+    ar(c, d);
   }
   
 };
 CEREAL_CLASS_VERSION(SomeData, 1);
+// ---------------------------------------------------------
 
 
+// ---------------------------------------------------------
 // create a structure we wish to serialize
 struct MyType
 {
   int x;
   double y;
-  SomeData s;
+  SomeData s{5, 4};
   
   template <class Archive>
   void serialize(Archive& ar, std::uint32_t const version)
@@ -86,20 +107,26 @@ struct MyType
     ar(s);    // take complex data type
   }
 };
+// ---------------------------------------------------------
 
 
+// ---------------------------------------------------------
 // [[Rcpp::export]]
 int main()
 {
   // create container
   std::ofstream os("Backend/out.bin", std::ios::binary);
+
   // local scope to fill and flush out archive
   {
     cereal::BinaryOutputArchive ar(os);
     MyType m;
+    Rcpp::Rcout << m.s.get_double() << std::endl;
+    Rcpp::Rcout << m.s.get_int() << std::endl;
+
     ar( m );
   }
   
   return 0;
 }
-
+// ---------------------------------------------------------

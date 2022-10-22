@@ -35,7 +35,7 @@ int main()
 {
   
   { // serialize towards files backed on disk
-    std::ofstream os1("Backend/data_SER02.bin");
+    std::ofstream os1("Backend/data_SER02.bin", std::ios::binary);
     std::ofstream os2("Backend/data_SER02.xml");
     std::ofstream os3("Backend/data_SER02.json");
     
