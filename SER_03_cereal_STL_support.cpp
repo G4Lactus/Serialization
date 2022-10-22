@@ -184,7 +184,7 @@ private:
   double someDouble{42.42};
   std::string someStr{"Hans Wurst"};  
   std::array<double, 25> data_array;
-  std::array<std::string, 4> str_array;  
+  std::array<std::string, 4> str_array;
   std::vector<double> data_vector;
   std::deque<int> data_deque;
   std::list<std::vector<double>> data_list_of_vecs;
