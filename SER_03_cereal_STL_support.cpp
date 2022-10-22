@@ -57,7 +57,7 @@ public:
     fillPriorityQueue();
     return;
   }
-  
+
   void fillDataMap()
   {
     // fill map with key value pairs
@@ -71,7 +71,7 @@ public:
     };
     return;
   }
-  
+
   std::vector<double> filledVector() {
     std::vector<double> vec;
     for (std::size_t l{0}; l < 10; ++l) {
@@ -79,13 +79,13 @@ public:
     }
     return vec;
   }
-  
+
   void fillVector()
   {
     data_vector = filledVector();
     return;
   }
-  
+
   void fillList()
   {
     for (std::size_t l{0}; l < 25; ++l) {
@@ -93,20 +93,20 @@ public:
     }
     return;
   }
-  
+
   void fillDeque()
   {
     data_deque = {7, 15, 16, 8};
     data_deque.push_back(13);
     data_deque.push_front(25);
   }
-  
+
   void fillArray()
   {
     data_array.fill(42);
     str_array = {"Larry", "Moe", "Curly", "Frank"};
   }
-  
+
   void fillForwardList()
   {
     data_forward_list.assign({1, 2, 3});
@@ -115,7 +115,7 @@ public:
     data_forward_list.push_front(62);
     data_forward_list.pop_front();
   }
-  
+
   void fillSet()
   {
     string_set.insert("first");
@@ -124,7 +124,7 @@ public:
     string_set.insert("fourth");
     string_set.insert("first"); // duplicate, won't be added
   }
-  
+
   void fillMultiSet()
   {
     data_multiset.insert(42);
@@ -133,20 +133,20 @@ public:
     data_multiset.insert(22);
     data_multiset.insert(52);
   }
-  
+
   void fillMultiMap()
   {
     data_multimap.insert(std::pair<int, int>(1, 42));
     data_multimap.insert(std::pair<int, double>(1, 42.42));
   }
-  
+
   void fillUnorderedMap()
   {
     data_unorderd_map["Hans"] = 10;
     data_unorderd_map["Wurst"] = 42;
     data_unorderd_map["Nervt!"] = 0;
   }
-  
+
   void fillStack()
   {
     data_stack.push(21);
@@ -154,52 +154,51 @@ public:
     data_stack.push(23);
     data_stack.push(24);
   }
-  
+
   void fillQueue()
   {
     data_queue.emplace("Cat");
     data_queue.emplace("Dog");
     data_queue.emplace("Whale");
   }
-  
+
   void fillPriorityQueue()
   {
     data_priority_queue.push(19);
     data_priority_queue.push(18);
     data_priority_queue.push(17);
   }
-  
+
   // some public data
   // ------------------------------
-  // int public_int{4};
-  // double public_double{4.24};
-  // std::string public_string{"HI!"};
-  // bool public_bool{true};
-  // std::vector<double> public_vector = filledVector();
+  int public_int{4};
+  double public_double{4.24};
+  std::string public_string{"HI!"};
+  bool public_bool{true};
+  std::vector<double> public_vector = filledVector();
 
 private:
   // our data types
   // ------------------------------
-  std::map<std::string, std::vector<std::complex<float>>> data_map;
-  std::vector<double> data_vector;
-  std::list<std::vector<double>> data_list_of_vecs;
-  std::deque<int> data_deque;
-  std::array<std::string, 4> str_array;
+  int someInt{42};
+  double someDouble{42.42};
+  std::string someStr{"Hans Wurst"};  
   std::array<double, 25> data_array;
+  std::array<std::string, 4> str_array;  
+  std::vector<double> data_vector;
+  std::deque<int> data_deque;
+  std::list<std::vector<double>> data_list_of_vecs;
   std::forward_list<double> data_forward_list;
-  std::set<std::string> string_set;  
-  std::multiset<int, std::greater<int>> data_multiset;
+  std::map<std::string, std::vector<std::complex<float>>> data_map;
+  std::set<std::string> string_set;
   std::multimap<int, int> data_multimap;
+  std::multiset<int, std::greater<int>> data_multiset;
   std::unordered_map<std::string, double> data_unorderd_map;
   std::stack<double> data_stack;
   std::queue<std::string> data_queue;
   std::priority_queue<int> data_priority_queue;
   // ------------------------------
-  std::string someStr{"Hans Wurst"};
-  int someInt{42};
-  double someDouble{42.42};
-  // --------------------------------
-  
+
   
   // friend
   // --------------------------------
@@ -207,31 +206,41 @@ private:
   
   
   // let cereal know what to archive
+  // NOTE: YOU HAVE TO LIST THE VARIABLES IN THE ORDER OF OCCURRENCE, OTHERWISE
+  //       YOU END IN AN INFINITY LOOP, RAM CORRUPTION AND FATAL ERROR
   // --------------------------------
   template<class Archive>
   void serialize(Archive& archive)
   {
     archive(
-      CEREAL_NVP(someStr),
+      // --------------------------      
+      CEREAL_NVP(public_int),
+      CEREAL_NVP(public_double),
+      CEREAL_NVP(public_string),
+      CEREAL_NVP(public_bool),
+      CEREAL_NVP(public_vector),
+      // --------------------------
       CEREAL_NVP(someInt),
       CEREAL_NVP(someDouble),
-      CEREAL_NVP(data_map),
-      CEREAL_NVP(data_vector),
-      CEREAL_NVP(data_list_of_vecs),
-      CEREAL_NVP(data_deque),
+      CEREAL_NVP(someStr),
       CEREAL_NVP(data_array),
       CEREAL_NVP(str_array),
+      CEREAL_NVP(data_vector),
+      CEREAL_NVP(data_deque),
+      CEREAL_NVP(data_list_of_vecs),
       CEREAL_NVP(data_forward_list),
+      CEREAL_NVP(data_map),
       CEREAL_NVP(string_set),
-      CEREAL_NVP(data_multiset),
       CEREAL_NVP(data_multimap),
+      CEREAL_NVP(data_multiset),
       CEREAL_NVP(data_unorderd_map),
       CEREAL_NVP(data_stack),
       CEREAL_NVP(data_queue),
       CEREAL_NVP(data_priority_queue)
+      // --------------------------
     );
   }
-  
+
 };
 
 
