@@ -3,11 +3,11 @@
 // ----------------------------------------
 // [[Rcpp::depends(Rcereal)]]
 #include <iostream>
-#include <sstream> // sstream is one option, you can choose other streams
+// define stream container, other choices are valid
+#include <sstream>
 
 #include <cereal/archives/binary.hpp>
 #include <Rcpp.h>
-
 
 
 // some "complex" data class
@@ -35,7 +35,7 @@ int main()
   std::stringstream ss; // any stream class can be used
   
   // serialization
-  // -------------------
+  // ----------------------------------------
   {
     cereal::BinaryOutputArchive oarchive(ss); // write data to archive
     
@@ -65,7 +65,7 @@ int main()
 
 
   // deserialization
-  // -------------------
+  // ----------------------------------------
   {
     cereal::BinaryInputArchive iarchive(ss); // create an input
     

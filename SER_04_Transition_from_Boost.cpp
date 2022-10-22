@@ -29,7 +29,7 @@
 // 
 // - cereal uses static_assert to give meaningful errors when you make mistakes
 // 
-// - cereal has a different prefereed syntax for serialization:
+// - cereal has a different preferred syntax for serialization:
 //    Boost: &, <<, >>   to send things to archive
 //    cereal: ()         archive(mydata1, mydata2)
 // 
@@ -98,7 +98,7 @@ struct MyType
 {
   int x;
   double y;
-  SomeData s{5, 4};
+  SomeData s{42, 21};
   
   template <class Archive>
   void serialize(Archive& ar, std::uint32_t const version)
@@ -114,18 +114,41 @@ struct MyType
 // [[Rcpp::export]]
 int main()
 {
-  // create container
-  std::ofstream os("Backend/out.bin", std::ios::binary);
 
-  // local scope to fill and flush out archive
+  // serialization
+  // -----------------------------------------
   {
+    // create streamer
+    std::ofstream os("Backend/out.bin", std::ios::binary);
+    
     cereal::BinaryOutputArchive ar(os);
     MyType m;
+    
+    Rcpp::Rcout << m.s.a << std::endl;
+    Rcpp::Rcout << m.s.b << std::endl;
     Rcpp::Rcout << m.s.get_double() << std::endl;
     Rcpp::Rcout << m.s.get_int() << std::endl;
 
-    ar( m );
+    ar(m);
   }
+  // -----------------------------------------
+  
+  Rcpp::Rcout << std::endl;
+  
+  // deserialization
+  // -----------------------------------------
+  {
+    std::ifstream is("Backend/out.bin");
+    cereal::BinaryInputArchive ar(is);
+    
+    MyType m;
+    ar(m);
+    Rcpp::Rcout << m.s.a << std::endl;
+    Rcpp::Rcout << m.s.b << std::endl;    
+    Rcpp::Rcout << m.s.get_double() << std::endl;
+    Rcpp::Rcout << m.s.get_int() << std::endl;
+  }
+  // -----------------------------------------
   
   return 0;
 }

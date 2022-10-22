@@ -171,11 +171,11 @@ public:
   
   // some public data
   // ------------------------------
-  int public_int{4};
-  double public_double{4.24};
-  std::string public_string{"HI!"};
-  bool public_bool{true};
-  std::vector<double> public_vector = filledVector();
+  // int public_int{4};
+  // double public_double{4.24};
+  // std::string public_string{"HI!"};
+  // bool public_bool{true};
+  // std::vector<double> public_vector = filledVector();
 
 private:
   // our data types
