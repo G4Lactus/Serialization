@@ -74,13 +74,14 @@ class Fan_of_linear_Agebra
 {
 private:
   int i1, i2;
-  Serialize_NumericMatrix sNM;
   Rcpp::NumericMatrix m;
 
   friend class cereal::access;
   
   template<class Archive>
-  void serialize(Archive& archive) {
+  void save(Archive& archive) const
+  {
+    Serialize_NumericMatrix sNM{m};
     archive(
       CEREAL_NVP(i1),
       CEREAL_NVP(i2)
@@ -89,13 +90,29 @@ private:
     archive(
       CEREAL_NVP(sNM)
     );
-
+    
   }
+  
+  template<class Archive>
+  void load(Archive& archive)
+  {
+    Serialize_NumericMatrix sNM;
+    archive(
+      CEREAL_NVP(i1),
+      CEREAL_NVP(i2)
+    );
+    
+    archive(
+      CEREAL_NVP(sNM)
+    );
+    m = reconstruct_numericMatrix(sNM);
+  }
+  
   
 public:
   Fan_of_linear_Agebra() = default;
   Fan_of_linear_Agebra(int i1, int i2, Rcpp::NumericMatrix m)
-    : i1{i1}, i2{i2}, sNM{m} {
+    : i1{i1}, i2{i2}, m{m} {
     };
   ~Fan_of_linear_Agebra() = default;
   
@@ -107,10 +124,18 @@ public:
     return i2;
   }
   
-  Rcpp::NumericMatrix get_numericMatrix() {
-    m = Rcpp::NumericMatrix(sNM.get_nrows(), sNM.get_ncols());
-    m.
+  Rcpp::NumericMatrix get_NumericMatrix() const {
     return m;
+  } 
+  
+  Rcpp::NumericMatrix reconstruct_numericMatrix(Serialize_NumericMatrix sNM) {
+    std::size_t mat_size = sNM.get_ncols()*sNM.get_nrows();
+    Rcpp::NumericMatrix mat(sNM.get_nrows(), sNM.get_ncols());
+    std::vector<double> vals{sNM.get_matrix_data()};
+    for (std::size_t i{0}; i < mat_size; ++i) {
+      mat[i] = vals[i];
+    }
+    return mat;
   }
   
 };
@@ -122,8 +147,7 @@ void serialize() {
   Rcpp::NumericMatrix mat(5, 5);
   std::fill(mat.begin(), mat.end(), 42);
   Fan_of_linear_Agebra fola(4, 42, mat);
-  Rcpp::Rcout << fola.get_numericMatrix() << std::endl;
-  
+  Rcpp::Rcout << fola.get_NumericMatrix() << std::endl;
   oarchive(cereal::make_nvp("Fan of linear algebra: ", fola));
   
   return;
@@ -135,7 +159,7 @@ void deserialize() {
   cereal::BinaryInputArchive iarchive(is);
   Fan_of_linear_Agebra fola{};
   iarchive(fola);
-  Rcpp::Rcout << fola.get_numericMatrix() << std::endl;
+  Rcpp::Rcout << fola.get_NumericMatrix() << std::endl;
   
   return;
 }

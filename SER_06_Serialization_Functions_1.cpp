@@ -42,6 +42,7 @@ struct MyClass
   template<class Archive>
   void save(Archive& archive) const
   {
+    /* ... */
     archive(x, y, z);
   }
   
@@ -49,6 +50,7 @@ struct MyClass
   void load(Archive& archive)
   {
     archive(x, y, z);
+    /* ... */
   }
 };
 // ----------------------------------------
