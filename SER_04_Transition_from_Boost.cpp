@@ -33,11 +33,12 @@
 //    Boost: &, <<, >>   to send things to archive
 //    cereal: ()         archive(mydata1, mydata2)
 // 
+// NOTE:
 // -> for me boost does not even compile (2022)
-// -> don't use boost at all and use cereal!
-// --------------------------------------------------
-// [[Rcpp::depends(Rcereal)]]
+// -> don't use boost at all for serialization and use cereal!
+// ------------------------------------------------------------
 
+// [[Rcpp::depends(Rcereal)]]
 #include <fstream>
 #include <cereal/archives/binary.hpp>
 #include <Rcpp.h>
