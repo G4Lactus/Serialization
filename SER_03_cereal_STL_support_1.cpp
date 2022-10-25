@@ -7,13 +7,13 @@
 // 
 // If you don't include the appropriate type, you will receive compile time
 // errors about cereal being unable to find an appropriate serialization
-// function.
-// ----------------------------------
+// function (static assertion failure).
+// ------------------------------------
 
 // [[Rcpp::depends(Rcereal)]]
 #include <iostream>
 
-// data types for cereal serialization
+// data types for cereal serialization we are going to simulate
 #include <cereal/types/map.hpp>
 #include <cereal/types/vector.hpp>
 #include <cereal/types/string.hpp>
@@ -27,9 +27,10 @@
 #include <cereal/types/unordered_map.hpp>
 #include <cereal/types/set.hpp>
 #include <cereal/types/stack.hpp>
+// ... check the remaining ones out
 
 
-// for doing the actual serialization into JSON format
+// doing serialization into JSON format
 #include <cereal/archives/json.hpp>
 
 #include <Rcpp.h>
