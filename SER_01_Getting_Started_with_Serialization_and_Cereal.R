@@ -46,12 +46,14 @@
 library(Rcpp)
 sourceCpp("SER_01_Getting_Started_with_Serialization_and_Cereal.cpp")
 
-# create backend folder
+# create backend folder, in the following tutorial serialized data are stored 
+# there
 path_to_backend <- paste0(getwd(), "/Backend/") 
 if (!dir.exists(path_to_backend)) {
   dir.create(path_to_backend)
 }
 
 # invoke main() to invoke serialization and deserialization of a class.
+# NOTE: in this example we don't store data at the Backend, but keep them in RAM.
 main()
 
