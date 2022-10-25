@@ -1,6 +1,7 @@
-// SER_02 Getting started: name value pairs and different file types backed on
-// disk
-// -----------------------------------
+// SER_02 Getting started with archives: 
+// In the following we perform serialization of a simple class instance and 
+// store the file backing at /Backend/ for the formats: binary, XML, JSON
+// ----------------------------------------------------------------------------
 // [[Rcpp::depends(Rcereal)]]
 #include <fstream> // the chosen stream operator is more less irrelevant
 
@@ -70,7 +71,7 @@ int main()
     );
   }
 
-  // in this block no data are availabe, they reside on disk
+  // in this block no data are available, they reside on disk
   
   
   { // deserialize from disk

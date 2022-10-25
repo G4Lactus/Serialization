@@ -1,12 +1,12 @@
 // Serialization Archives
 // -------------------------
-// Support for 3 types:
+// 
+// Inbuilt support for 3 archive types:
 // - binary
 // - XML
 // - JSON
 // 
-// Archives can be used by including <cereal/archives/xxxx.hpp> for the 
-// particular type.
+// Archive types can be used by including <cereal/archives/xxxx.hpp>.
 // They must be registered before any type of polymorphism.
 //
 // Archives decide how to output or interpret data that is being serialized.
@@ -19,26 +19,32 @@
 // 
 // cereal was not designed to be a robust long term storage solution - it is
 // your responsibility to ensure version compatibility between saved and loaded
-// cereal archives.
-// 
+// cereal archives. You control the version you assign to your archive (if any).
 // It is recommended that you use the same version of cereal for both loading
 // and saving data.
+// 
+// Also see the doxygen documentation
+// https://uscilab.github.io/cereal/assets/doxygen/group__Archives.html
 // ----------------------
 
 
 // Binary Data
 // ----------------------
 #include <cereal/archives/binary.hpp>
-// produce compact bit level representation of data and is not human readable.
-// It is a good choice, when computers are at both ends of writing/reading the
-// serialization.
+// Produces the most compact bit level representation of data and is not human
+// readable. It is a good choice, when computers are at both ends of 
+// writing/reading the serialization.
 // The binary archive is also the fastest archive that comes with cereal.
 // Binary archives will ignore name-value pairs and only serialize the values.
-
-#include <cereal/archives/portable_binary.hpp>
 // When using a binary archive and a file stream (std::fstream), remember to
 // specify the binary flag (std::ios::binary) when constructing the stream.
 
+#include <cereal/archives/portable_binary.hpp>
+// The binary archive makes no attempt to ensure that endianness is preserved
+// across different architectures (operating systems). If your data will be read
+// on both little and big-endian machines use it. The endianness of the
+// saving and loading machines are stored and data are transformed appropriately.
+// It has slightly more overhead than the regular binary archive.
 
 
 // XML
