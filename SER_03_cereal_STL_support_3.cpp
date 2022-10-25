@@ -9,12 +9,6 @@
 #include <Rcpp.h>
 
 
-class Serialize_ArmaMatrix
-{
-  
-};
-
-
 class Serialize_NumericMatrix
 {
 private:
