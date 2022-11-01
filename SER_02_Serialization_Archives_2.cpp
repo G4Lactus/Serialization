@@ -4,7 +4,6 @@
 // ----------------------------------------------------------------------------
 // [[Rcpp::depends(Rcereal)]]
 #include <fstream> // the chosen stream operator is more less irrelevant
-
 // archive types offered by cereal
 // ----------------------------------
 #include <cereal/archives/xml.hpp>
@@ -75,7 +74,7 @@ int main()
   
   
   { // deserialize from disk
-    std::ifstream is1("Backend/data_SER02.bin");
+    std::ifstream is1("Backend/data_SER02.bin", std::ios::binary);
     std::ifstream is2("Backend/data_SER02.xml"); 
     std::ifstream is3("Backend/data_SER02.json");    
 
