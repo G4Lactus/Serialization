@@ -139,7 +139,7 @@ int main()
   // deserialization
   // -----------------------------------------
   {
-    std::ifstream is("Backend/out.bin");
+    std::ifstream is("Backend/out.bin", std::ios::binary);
     cereal::BinaryInputArchive ar(is);
     
     MyType m;
