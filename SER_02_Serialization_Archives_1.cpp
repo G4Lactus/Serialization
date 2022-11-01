@@ -38,6 +38,7 @@
 // Binary archives will ignore name-value pairs and only serialize the values.
 // When using a binary archive and a file stream (std::fstream), remember to
 // specify the binary flag (std::ios::binary) when constructing the stream.
+// You have to do it for in- and output.
 
 #include <cereal/archives/portable_binary.hpp>
 // The binary archive makes no attempt to ensure that endianness is preserved
@@ -88,6 +89,8 @@
 // ----------------------
 // Special functions are called immediately before and after every type is
 // serialized. They are called prologue and epilogue.
+// 
+// Another candidate would be YAML.
 // 
 // The default cases for these functions look like:
 template<class Archive, class T>
