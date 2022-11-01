@@ -1,5 +1,6 @@
 // Serialization
 // ----------------------------------------------
+// Inspiration taken from:
 // https://www.youtube.com/watch?v=1zmujmkk95c
 
 //[[Rcpp::depends(Rcereal)]]
@@ -9,7 +10,6 @@
 
 #include <cereal/archives/binary.hpp>
 #include <cereal/access.hpp>
-// STL support
 #include <cereal/types/string.hpp>
 
 #include <Rcpp.h>
