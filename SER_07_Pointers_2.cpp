@@ -78,7 +78,7 @@ void simulate_deferring_smart_ptrs() {
 
   { // de-serialize
     Rcpp::Rcout << "Deserialize begin!" << std::endl;
-    std::ifstream is("Backend/myGraph.bin");
+    std::ifstream is("Backend/myGraph.bin", std::ios::binary);
     cereal::BinaryInputArchive ar(is);
 
     MyGraphStructure mg;
