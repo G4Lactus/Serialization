@@ -88,7 +88,7 @@ void perform_Serialization() {
 }
 
 void perform_Deserialization() {
-  std::ifstream is("Backend/employee.bin");
+  std::ifstream is("Backend/employee.bin", std::ios::binary);
   cereal::BinaryInputArchive archive(is);
   EmployeeData emp1{}, emp2{}, emp3{};
   archive(emp1, emp2, emp3);
