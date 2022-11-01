@@ -127,7 +127,7 @@ void simulate_types_without_default_ctor() {
 
   { // deserialize
     Rcpp::Rcout << "Deserialize begin!" << std::endl;
-    std::ifstream is1("Backend/mytype1.bin");
+    std::ifstream is1("Backend/mytype1.bin", std::ios::binary);
     cereal::BinaryInputArchive ar(is1);
     std::shared_ptr<MyType1> myt1;
     ar(myt1);
@@ -151,7 +151,7 @@ void simulate_types_without_default_ctor() {
   
   { // deserialize
     Rcpp::Rcout << "Deserialize begin!" << std::endl;
-    std::ifstream is2("Backend/mytype2.bin");
+    std::ifstream is2("Backend/mytype2.bin", std::ios::binary);
     cereal::BinaryInputArchive ar(is2);
     std::shared_ptr<MyType2> myt2;
     ar(myt2);
