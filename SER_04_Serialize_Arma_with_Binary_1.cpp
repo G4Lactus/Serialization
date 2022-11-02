@@ -1,5 +1,6 @@
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::depends(Rcereal)]]
+#include <iostream>
 #include <fstream>
 #include <cereal/archives/binary.hpp>
 #include <cereal/types/list.hpp>
@@ -37,8 +38,9 @@ namespace arma {
           static_cast< std::size_t >( n_rows * n_cols * sizeof( eT ) ) ) );
     }
   
+  
   template<class Archive>
-  void save(Archive & ar, const arma::sp_mat &t, unsigned) {
+  void save(Archive & ar, const arma::sp_mat &t, unsigned){
     ar(t.n_rows, t.n_cols, t.n_nonzero);
     
     for (auto it = t.begin(); it != t.end(); ++it) {
@@ -48,18 +50,17 @@ namespace arma {
   
   template<class Archive>
   void load(Archive & ar, arma::sp_mat &t, unsigned) {
-    uint64_t r, c, nz;
+    arma::uword r, c, nz;
     ar(r, c, nz);
-    
+
     t.zeros(r, c);
     while (nz--) {
+      Rcpp::Rcout << nz << std::endl;
       double v;
-      ar(r, c, v);
+      ar(--r, --c, v);
       t(r, c) = v;
     }
   }
-
-
 }
 
 
@@ -67,7 +68,7 @@ namespace arma {
 // [[Rcpp::export]]
 int main() {
   
-  {
+  { // Serialize
     arma::mat amat1 = arma::randn(5, 10);
     arma::mat amat2 = arma::randn(4, 5);
     arma::mat amat3 = arma::randn(3, 9);
@@ -80,33 +81,35 @@ int main() {
     C(1, 2) = 0;
     C(2, 0) = 0;
     C(2, 1) = 0;
-    arma::sp_mat const A = arma::sp_mat(C);
-    assert(A.n_nonzero == 4);
-    A.print("A: ");
+    arma::sp_mat const spA = arma::sp_mat(C);
+    assert(spA.n_nonzero == 4);
+    spA.print("spA: ");
 
     std::list<arma::mat> lst_amat;
     lst_amat.push_back(amat1);
     lst_amat.push_back(amat2);
     lst_amat.push_back(amat3);
     
+    Rcpp::Rcout << "Serialization begin." << std::endl;
     std::ofstream os("Backend/Serialize_Arma.bin", std::ios::binary);
     cereal::BinaryOutputArchive oarchive(os);
-    oarchive(amat1, lst_amat, avec1, A);
+    oarchive(amat1, lst_amat, avec1, spA);
+    Rcpp::Rcout << "Serialization finished." << std::endl;
   }
   
+  // .... put put put ... 
   
-  {
+  { // Deserialize
     arma::mat bmat;
     std::list<arma::mat> lst_bmat;
     arma::vec bvec;
-    arma::sp_mat sbmat1(3, 3);
+    arma::sp_mat sbmat1;
 
-    
+    Rcpp::Rcout << "Deserialization begin." << std::endl;
     std::ifstream is("Backend/Serialize_Arma.bin", std::ios::binary);
     cereal::BinaryInputArchive iarchive(is);
-    iarchive(bmat, lst_bmat, bvec);
-    Rcpp::Rcout << ":)" << std::endl;
-    iarchive(sbmat1);
+    iarchive(bmat, lst_bmat, bvec, sbmat1);
+    Rcpp::Rcout << "Deserialization finished." << std::endl;    
     
     bmat.print();
     Rcpp::Rcout << std::endl;
@@ -117,6 +120,7 @@ int main() {
     }
     bvec.print();
     Rcpp::Rcout << std::endl;
+    sbmat1.print();
 
     
   }
