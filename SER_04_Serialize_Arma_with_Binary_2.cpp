@@ -49,7 +49,7 @@ int main() {
     spA.print("spA: ");
     
 
-    std::ofstream os("Backend/Serialize_Arma.bin", std::ios::binary);
+    std::ofstream os("Backend/Serialize_sparseArma.bin", std::ios::binary);
     cereal::BinaryOutputArchive oarchive(os);
     oarchive(spA);
   }
@@ -59,7 +59,7 @@ int main() {
   { // Deserialize
     arma::sp_mat spB;
     
-    std::ifstream is("Backend/Serialize_Arma.bin", std::ios::binary);
+    std::ifstream is("Backend/Serialize_sparseArma.bin", std::ios::binary);
     cereal::BinaryInputArchive iarchive(is);
     iarchive(spB);
     
