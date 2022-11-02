@@ -7,8 +7,8 @@
 // Cereal needs access to either a default constructor or a specialization of
 // cereal::LoadAndConstruct for loading smart pointers.
 //
-// All smart pointers are supported: 
-// std::unique_ptr, std::shared_ptr, std::weak_ptr
+// All smart pointers are supported, i.e.:
+//  std::unique_ptr, std::shared_ptr, std::weak_ptr
 // cereal takes care that the data are only serialized once.
 // 
 // For polymorphic objs cereal will also properly handle pointers to the 
@@ -40,6 +40,7 @@
 #include <Rcpp.h>
 
 
+// ----------------------------------------------------------------------------
 struct MyType1
 {
 
@@ -68,9 +69,10 @@ struct MyType1
     construct(x);
   }
 };
+// ----------------------------------------------------------------------------
 
 
-
+// ----------------------------------------------------------------------------
 // Alternatively, we define an external specialization for LoadAndConstruct
 struct MyType2
 {
@@ -108,8 +110,10 @@ namespace cereal
     }
   };
 }
+// ----------------------------------------------------------------------------
 
 
+// ----------------------------------------------------------------------------
 // demo
 void simulate_types_without_default_ctor() {
   
