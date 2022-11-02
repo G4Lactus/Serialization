@@ -14,9 +14,10 @@
 // In template metaprogramming, techniques such as std::enable_if can be used to
 // selectively disable function overloads.
 // cereal provides some similar functionality in a slightly more aesthetically
-// pleasing manner with EnableIf and DisableIf. These will enable or disable
-// a function overload if all of their variadic bool parameters, when ANDed
-// together, are true. Since they perform an AND operation of their arguments,
+// pleasing manner with EnableIf and DisableIf.
+// These will enable or disable a function overload if all of their variadic
+// bool parameters, when ANDed together, are true. Since they perform an AND
+// operation of their arguments,
 // OR operations or other more complicated boolean expressions should be done
 // manually.
 // EnableIf and DisableIf are added as extra template parameter to the function,
@@ -25,14 +26,14 @@
 
 // is_same_archive
 // operates in a similar manner to std::is_same except that it will automatically
-// strip various wrappers and CV qualifiers. Its use is recommneded over
+// strip various wrappers and CV qualifiers. Its use is recommended over
 // std::is_same because cereal will often slightly adjust archive parameters
 // so that they become const or are wrapped in some traits class.
 
-
 // is_text_archive
-// checks to see if an archive has been tagged with the cereal::traits::TextArchive
-// tag. JSON and XML archives that ship with cereal both have this tag.
+// checks to see if an archive has been tagged with the 
+// cereal::traits::TextArchive tag. JSON and XML archives that ship with cereal
+// both have this tag.
 
 // strip_minimal
 // Useful when working with custom save_minimal or load_minimal. cereal may
