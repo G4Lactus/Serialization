@@ -20,7 +20,7 @@
 
 // Writing Serialization Functions with the PIMPL Idiom
 // ------------------------------------------------------
-// myclass.hpp
+// "MyClass.hpp"
 // -----------------------------
 #include <iostream>
 #include <cereal/access.hpp>
@@ -28,8 +28,6 @@
 // [[Rcpp::depends(Rcereal)]]
 
 
-// myclass.hpp
-// --------------------------
 class MyClass
 {
 public:
@@ -38,25 +36,26 @@ public:
   
 private:
   int x;
+  
   class MyClassDetail; // forward declaration of PIMPL class
-  
   std::unique_ptr<MyClassDetail> impl; // pointer to implementation
-  friend class cereal::access;
   
+  friend class cereal::access;
   // The implementation for this must be deferred until
   // after the declaration of the PIMPL class
   template<class Archive>
   void serialize(Archive& ar);
   
 };
+// ----------------------------------------------------------------------------
 
 
-// myclass.cpp
+// "MyClass.cpp"
 // -----------------------------
-#include "myclass.hpp"
+#include "MyClass.hpp"
 #include <cereal/types/memory.hpp>
-// We need to include all archives that this type will be serialized with for
-// explicit instantiation
+// include all archives that this type will be serialized with for explicit
+// instantiation
 #include <cereal/archives/json.hpp>
 
 // Definition for PIMPL class
@@ -80,19 +79,17 @@ private:
   
 };
 
-
 MyClass::~MyClass() = default;
 
 // We must also explicitly instantiate our template fcts for serialization
 template void MyClass::MyClassDetail::save<cereal::JSONOutputArchive>(cereal::JSONOutputArchive&) const;
 template void MyClass::MyClassDetail::load<cereal::JSONInputArchive>(cereal::JSONInputArchive&);
 
-// Note that we need to instatiate for both loading and saving, even if we use a
-// single serialize function
+// Note that we need to instantiate for both loading and saving
 template void MyClass::serialize<cereal::JSONInputArchive>(cereal::JSONOutputArchive&);
 template void MyClass::serialize<cereal::JSONOutputArchive&);
 
-
+// ----------------------------------------------------------------------------
 
 
 // main.cpp
