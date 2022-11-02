@@ -43,12 +43,13 @@ public:
   ~STL_User_Class() = default;
   
   void fillDataContainer() {
-    fillDataMap();
     fillArray();
     fillVector();
     fillDeque();
+    fillList_of_doubles();
     fillList();
     fillForwardList();
+    fillDataMap();
     fillSet();
     fillMultiSet();
     fillMultiMap();
@@ -56,20 +57,6 @@ public:
     fillStack();
     fillQueue();
     fillPriorityQueue();
-    return;
-  }
-
-  void fillDataMap()
-  {
-    // fill map with key value pairs
-    data_map = {
-      {"real", { {1.0f, 0},
-                 {2.2f, 0},
-                 {3.3f, 0} }},
-      {"imaginary", { {0, -1.0f},
-                      {0, -2.9932f},
-                      {0, -3.5f} }}
-    };
     return;
   }
 
@@ -86,35 +73,53 @@ public:
     data_vector = filledVector();
     return;
   }
-
-  void fillList()
-  {
-    for (std::size_t l{0}; l < 25; ++l) {
-      data_list_of_vecs.emplace_back(filledVector());
-    }
-    return;
-  }
-
-  void fillDeque()
-  {
-    data_deque = {7, 15, 16, 8};
-    data_deque.push_back(13);
-    data_deque.push_front(25);
-  }
-
+  
   void fillArray()
   {
     data_array.fill(42);
     str_array = {"Larry", "Moe", "Curly", "Frank"};
   }
 
+  
+  void fillDeque()
+  {
+   data_deque = {7, 15, 16, 8};
+   data_deque.push_back(13);
+   data_deque.push_front(25);
+  }
+  
+  void fillList_of_doubles()
+  {
+    data_list_of_doubles.push_back(3.14);
+    data_list_of_doubles.push_back(42.0);
+  }
+  
+  void fillList()
+  {
+   for (std::size_t l{0}; l < 25; ++l) {
+     data_list_of_vecs.emplace_back(filledVector());
+   }
+   return;
+  }
+
   void fillForwardList()
   {
-    data_forward_list.assign({1, 2, 3});
-    data_forward_list.assign(5, 42); // assing 5x 42
-    data_forward_list.assign(data_forward_list.begin(), data_forward_list.end());
-    data_forward_list.push_front(62);
-    data_forward_list.pop_front();
+   data_forward_list.assign(5, 42); // assing 5x 42
+   data_forward_list.push_front(62);
+  }
+  
+  void fillDataMap()
+  {
+    // fill map with key value pairs
+    data_map = {
+      {"real", { {1.0f, 0},
+                 {2.2f, 0},
+                 {3.3f, 0} } },
+      {"imaginary", { {0, -1.0f},
+                      {0, -2.9932f},
+                      {0, -3.5f} } }
+    };
+    return;
   }
 
   void fillSet()
@@ -183,11 +188,12 @@ private:
   // ------------------------------
   int someInt{42};
   double someDouble{42.42};
-  std::string someStr{"Hans Wurst"};  
+  std::string someStr{"Hans Wurst"};
   std::array<double, 25> data_array;
   std::array<std::string, 4> str_array;
   std::vector<double> data_vector;
   std::deque<int> data_deque;
+  std::list<double> data_list_of_doubles;
   std::list<std::vector<double>> data_list_of_vecs;
   std::forward_list<double> data_forward_list;
   std::map<std::string, std::vector<std::complex<float>>> data_map;
@@ -228,6 +234,7 @@ private:
       CEREAL_NVP(str_array),
       CEREAL_NVP(data_vector),
       CEREAL_NVP(data_deque),
+      CEREAL_NVP(data_list_of_doubles),
       CEREAL_NVP(data_list_of_vecs),
       CEREAL_NVP(data_forward_list),
       CEREAL_NVP(data_map),
