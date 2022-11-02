@@ -40,18 +40,33 @@ typename std::enable_if<cereal::traits::is_input_serializable<cereal::BinaryData
 // [[Rcpp::export]]
 int main() {
   {
-    arma::mat amat = arma::randn(5, 10);
+    arma::mat amat1 = arma::randn(5, 10);
+    arma::mat amat2 = arma::randn(4, 5);
+    arma::mat amat3 = arma::randn(3, 9);
+    std::list<arma::mat> lst_amat;
+    lst_amat.push_back(amat1);
+    lst_amat.push_back(amat2);
+    lst_amat.push_back(amat3);
+    
     std::ofstream os("Backend/Serialize_Arma.bin", std::ios::binary);
     cereal::BinaryOutputArchive oarchive(os);
-    oarchive(amat);    
+    oarchive(amat1, lst_amat);    
   }
   
   {
     arma::mat bmat;
+    std::list<arma::mat> lst_bmat;
     std::ifstream is("Backend/Serialize_Arma.bin", std::ios::binary);
     cereal::BinaryInputArchive iarchive(is);
-    iarchive(bmat);
+    iarchive(bmat, lst_bmat);
     bmat.print();
+    Rcpp::Rcout << std::endl;
+        
+    std::list<arma::mat>::iterator it;
+    for (it = lst_bmat.begin(); it != lst_bmat.end(); ++it) {
+      (*it).print();
+      Rcpp::Rcout << std::endl;
+    }
   }
 
   
