@@ -46,8 +46,7 @@
 library(Rcpp)
 sourceCpp("SER_01_Getting_Started_with_Serialization_and_Cereal.cpp")
 
-# create backend folder, in the following tutorial serialized data are stored 
-# there
+# create backend folder used later
 path_to_backend <- paste0(getwd(), "/Backend/") 
 if (!dir.exists(path_to_backend)) {
   dir.create(path_to_backend)
