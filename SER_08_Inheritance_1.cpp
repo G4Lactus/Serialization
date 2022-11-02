@@ -6,6 +6,7 @@
 // Normal Inheritance
 // -----------------------
 // [[Rcpp::depends(Rcereal)]]
+#include <fstream>
 #include <cereal/types/base_class.hpp>
 #include <Rcpp.h>
 
