@@ -19,7 +19,7 @@ class EmployeeData
 {
 
   public:
-    EmployeeData() = default;
+    EmployeeData(){};
     EmployeeData(std::string name, int age, std::string company)
       : name{name}, age{age}, company{company} {}
     ~EmployeeData() = default;
@@ -54,7 +54,7 @@ class EmployeeData
     }
     
   private:
-
+    double test;
     std::string name;
     int age;
     std::string company;
@@ -160,15 +160,14 @@ RCPP_MODULE(EmployeeData_mod) {
     .method("get_age", &EmployeeData::get_age, "Return employee age.")
     .method("serialize_EmployeeData", &EmployeeData::serialize_EmployeeData, "Serialize class instance and save on disks.")
     .method("deserialize_EmployeeData", &EmployeeData::deserialize_EmployeeData, "Deserialize class instance and restore from disk.")
-    
   ;
 
 }
 
+
 /*** R
 # Demo
 # ----------------
-
 
 # First, serialize and deserialize at the C++ backend
 main()
@@ -185,9 +184,9 @@ emp$showData()
 emp$serialize_EmployeeData("Backend/", "employee_Chandan_from_R.bin")
 rm(emp)
 gc()
-
-emp <- new(EmployeeData)
-emp$deserialize_EmployeeData("Backend/", "employee_Chandan_from_R.bin")
-emp$showData()
+ 
+emp_de <- new(EmployeeData)
+emp_de$deserialize_EmployeeData("Backend/", "employee_Chandan_from_R.bin")
+emp_de$showData()
 */
 
