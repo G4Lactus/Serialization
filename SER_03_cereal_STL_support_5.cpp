@@ -54,10 +54,10 @@ class EmployeeData
     }
     
   private:
-    double test;
-    std::string name;
-    int age;
-    std::string company;
+    double test{};
+    std::string name{};
+    int age{};
+    std::string company{};
 
     friend class cereal::access;
         
@@ -186,7 +186,13 @@ rm(emp)
 gc()
  
 emp_de <- new(EmployeeData)
+emp_de$get_age()
+emp_de$get_company()
+emp_de$get_name()
 emp_de$deserialize_EmployeeData("Backend/", "employee_Chandan_from_R.bin")
 emp_de$showData()
+emp_de$get_age()
+emp_de$get_company()
+emp_de$get_name()
 */
 
