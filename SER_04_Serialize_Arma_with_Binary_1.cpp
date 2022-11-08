@@ -55,7 +55,6 @@ namespace arma {
 
     t.zeros(r, c);
     while (nz--) {
-      Rcpp::Rcout << nz << std::endl;
       double v;
       ar(--r, --c, v);
       t(r, c) = v;
