@@ -24,8 +24,8 @@ namespace arma {
     ar(r, c, nz);
     
     t.zeros(r, c);
+    double v{};
     while (nz--) {
-      double v;
       ar(--r, --c, v);
       t(r, c) = v;
     }
