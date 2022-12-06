@@ -20,7 +20,6 @@ namespace arma {
       ar( n_rows );
       ar( n_cols );
       ar( cereal::binary_data(
-            // static_cast<void* const>( const_cast<eT*>( m.memptr() ) ),
             const_cast<eT*>( m.memptr() ),
             static_cast<std::size_t>( n_rows * n_cols * sizeof(eT) ) 
           )
@@ -38,7 +37,6 @@ namespace arma {
       m.resize( n_rows, n_cols );
 
       ar( cereal::binary_data(
-            // static_cast<void* const>( const_cast<eT*>( m.memptr() ) ),
             const_cast<eT*>( m.memptr() ),            
             static_cast<std::size_t>( n_rows * n_cols * sizeof(eT) ) 
           )
@@ -46,31 +44,7 @@ namespace arma {
       return;
   }
 
-  // template<class Archive>
-  // void save(Archive & ar, const arma::mat &m, unsigned){
-  //   arma::uword n_rows = m.n_rows;
-  //   arma::uword n_cols = m.n_cols;
-  //   ar( n_rows );
-  //   ar( n_cols );
-  // 
-  //   return;    
-  // }
-  
-  // template<class Archive>
-  // void load(Archive & ar, arma::sp_mat &t, unsigned) {
-  //   arma::uword r, c, nz;
-  //   ar(r, c, nz);
-  //   
-  //   t.zeros(r, c);
-  //   double v{};
-  //   while (nz--) {
-  //     ar(--r, --c, v);
-  //     t(r, c) = v;
-  //   }
-  //   return;
-  // }
-  
-  
+
   template<class Archive>
   void save(Archive & ar, const arma::sp_mat &t, unsigned){
     ar(t.n_rows, t.n_cols, t.n_nonzero);
